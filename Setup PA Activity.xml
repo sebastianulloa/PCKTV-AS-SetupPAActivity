@@ -14,10 +14,16 @@
 	</Memory>
 
 	<Parameters>
+		<ScriptParameter id="1" type="string" values="">
+			<Description>Activity Name</Description>
+		</ScriptParameter>
+			<ScriptParameter id="2" type="string" values="">
+			<Description>DOM Definition</Description>
+		</ScriptParameter>
 	</Parameters>
 
 	<Script>
-		<Exe id="1" type="csharp">
+		<Exe id="4" type="csharp">
 			<Value><![CDATA[[Project:Setup PA Activity_1]]]></Value>
 			<!--<Param type="debug">true</Param>-->
 			<Message></Message>

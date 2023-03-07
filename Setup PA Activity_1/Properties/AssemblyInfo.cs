@@ -12,5 +12,5 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyCulture("")]
 
 [assembly: ComVisible(false)]
-[assembly: Guid("C2CAE59B-B314-4486-B3F4-C7858FE9E1AE")]
+[assembly: Guid("B62F74EF-874B-464C-8C7E-3B205666B3F6")]
 [assembly: AssemblyVersion("1.0.0.0")]
