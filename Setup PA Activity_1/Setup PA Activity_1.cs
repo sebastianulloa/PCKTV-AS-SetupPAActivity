@@ -135,6 +135,11 @@ public class Script
 
 			engine.SendSLNetMessage(createScriptMessage);
 
+			var profilesRequest = new GetProfileDefinitionMessage();
+			var availableProfiles = engine.SendSLNetMessage(profilesRequest)[0] as ProfileManagerResponseMessage;
+
+			var scriptTaskProfile = GetPaScriptTaskProfile(engine, availableProfiles);
+
 			// create/check parameters based on DOM
 			// From given DOM Definition, create profile parameters to include in profile definition
 			DomHelper domHelper = new DomHelper(engine.SendSLNetMessages, "process_automation");
@@ -143,7 +148,8 @@ public class Script
 			var definition = domHelper.DomDefinitions.Read(domDefinitionFilter).FirstOrDefault();
 			if (definition == null)
 			{
-				engine.Log("Setup PA Activity|Given DOM definition doesn't exist: " + domDefinitionName);
+				engine.Log("Setup PA Activity|Given DOM definition doesn't exist: " + domDefinitionName + ". Ignoring new profile parameters.");
+				CreateProfileDefinition(engine, name, new List<Parameter>(), scriptTaskProfile);
 				return;
 			}
 
@@ -175,11 +181,6 @@ public class Script
 				engine.Log("Setup PA Activity|Failed to set up new parameters for the profile.");
 				return;
 			}
-
-			var profilesRequest = new GetProfileDefinitionMessage();
-			var availableProfiles = engine.SendSLNetMessage(profilesRequest)[0] as ProfileManagerResponseMessage;
-
-			var scriptTaskProfile = GetPaScriptTaskProfile(engine, availableProfiles);
 
 			// check if profile def exists, if so, update with new parameters
 			var existingProfileDefinitions = availableProfiles.ManagerObjects.Select(x => x.Item2 as ProfileDefinition).Where(x => x != null && x.Name.Equals(name));
